@@ -91,3 +91,119 @@ def main():
         address.place(x=610, y=370)
         addrs_entry = Entry(base, width=15, font=("Arial 15 bold"))
         addrs_entry.place(x=610, y=410)
+
+
+        vehicle = Label(base, text="Vehicle No.", font=("Arial 15 bold"), bg="silver", fg="black")
+        vehicle.place(x=400, y=450)
+        vehicle_entry = Entry(base, width="15", font=("Arial 15 bold"))
+        vehicle_entry.place(x=400, y=490)
+        m2 = Label(base, text="(MH20EU9295)", font=("Arial 11 bold"), bg="silver", fg="black")
+        m2.place(x=470, y=450)
+
+        work_place = Label(base, text="Work Place/College", font=("Arial 15 bold"), bg="silver", fg="black")
+        work_place.place(x=610, y=450)
+        place_entry = Entry(base, width="15", font=("Arial 15 bold"))
+        place_entry.place(x=610, y=490)
+
+
+        gender = Label(base, text="Gender", font=("Arial 15 bold"), bg="silver", fg="black")
+        gender.place(x=400, y=580)
+        G = 1
+        def selected():
+            global G
+            if c1.get() == 1:
+                G = 1
+            elif c1.get() == 2:
+                G = 2
+            elif c1.get() == 0:
+                G = 0
+            else:
+                G = 1
+        c1 = IntVar()
+        a = Radiobutton(base, text="Male", bg="silver", fg="black", font=("Arial 15 bold"), variable=c1, value=1,
+                        command=selected)
+        b = Radiobutton(base, text="Female", bg="silver", fg="black", font=("Arial 15 bold"), variable=c1, value=2,
+                        command=selected)
+        c = Radiobutton(base, text="Other", bg="silver", fg="black", font=("Arial 15 bold"), variable=c1, value=0,
+                        command=selected)
+        a.place(x=490, y=580)
+        b.place(x=580, y=580)
+        c.place(x=680, y=580)
+        def available_roome():
+            rooms_availble = Label(base, text="Rooms Available", font=("Arial 20 bold"), bg="lightseagreen",
+                                   fg="white", padx=140)
+            rooms_availble.place(x=1005, y=110)
+            x = "    Room No.                       |                                 Beds"
+            room = Label(base, text=x, font=("Arial 15 bold"), bg="dark slate grey", fg="white")
+            room.place(x=1005, y=150)
+            global G
+            bed1 = None
+            bed2 = None
+            bed3 = None
+            if G == 1:
+                f1 = open("room_info_boys.txt","r")
+                bed1 = "B1"
+                bed2 = "B2"
+                bed3 = "B3"
+            elif G==2:
+                f1 = open("room_info_girls.txt","r")
+                bed1 = "G1"
+                bed2 = "G2"
+                bed3 = "G3"
+            elif G==0:
+                f1 = open("room_info_others.txt","r")
+                bed1 = "O1"
+                bed2 = "O2"
+                bed3 = "O3"
+            else:
+                file_name = "room_info_boys.txt"
+                bed1 = "B1"
+                bed2 = "B2"
+                bed3 = "B3"
+            all_lines = f1.readlines()
+            count = 1
+            rooms = []
+            for i in all_lines:
+                temp1 = str(i)
+                one_line = temp1.split(',')
+                if one_line[1] == bed1 and one_line[2] == bed2 and one_line[3] == bed3:
+                    temp = []
+                    count = 2
+                    temp.append(one_line[0])
+                    temp.append(bed1)
+                    temp.append(bed2)
+                    temp.append(bed3)
+                    rooms.append(temp)
+                if one_line[1] != bed1 and one_line[2] == bed2 and one_line[3] == bed3:
+                    count = 2
+                    temp = []
+                    temp.append(one_line[0])
+                    temp.append("NA")
+                    temp.append(bed2)
+                    temp.append(bed3)
+                    rooms.append(temp)
+                if one_line[1] == bed1 and one_line[2] != bed2 and one_line[3] == bed3:
+                    temp = []
+                    count = 2
+                    temp.append(one_line[0])
+                    temp.append(bed1)
+                    temp.append("NA")
+                    temp.append(bed3)
+                    rooms.append(temp)
+                if one_line[1] == bed1 and one_line[2] == bed2 and one_line[3] != bed3:
+                    temp = []
+                    count = 2
+                    temp.append(one_line[0])
+                    temp.append(bed1)
+                    temp.append(bed2)
+                    temp.append("NA")
+                    rooms.append(temp)
+                if one_line[1] == bed1 and one_line[2] != bed2 and one_line[3] != bed3:
+                    temp = []
+                    count = 2
+                    temp.append(one_line[0])
+                    temp.append(bed1)
+                    temp.append("NA")
+                    temp.append("NA")
+                    rooms.append(temp)
+                
