@@ -206,4 +206,112 @@ def main():
                     temp.append("NA")
                     temp.append("NA")
                     rooms.append(temp)
-                
+
+                if one_line[1] != bed1 and one_line[2] == bed2 and one_line[3] != bed3:
+                    temp = []
+                    count = 2
+                    temp.append(one_line[0])
+                    temp.append("NA")
+                    temp.append(bed2)
+                    temp.append("NA")
+                    rooms.append(temp)
+                if one_line[1] != bed1 and one_line[2] != bed2 and one_line[3] == bed3:
+                    temp = []
+                    count = 2
+                    temp.append(one_line[0])
+                    temp.append("NA")
+                    temp.append("NA")
+                    temp.append(bed3)
+                    rooms.append(temp)
+                if one_line[1] != bed1 and one_line[2] != bed2 and one_line[3] != bed3:
+                    temp = []
+                    count = 2
+                    temp.append("--")
+                    temp.append("NA")
+                    temp.append("NA")
+                    temp.append("NA")
+                    rooms.append(temp)
+            if count == 1:
+                y = "No Rooms Available"
+                x = Label(base, text=y, font=("Arial", 40), bg="dark slate grey", fg="white")
+                x.place(x=1020, y=300)
+            else:
+                x1co = 1150
+                y1co = 200
+                x2co = 1350
+                y2co = 200
+                flag = 1
+                for i in rooms:
+                    r_no = Label(base, text=i[0], font=("Arial", 15), bg="silver", fg="black")
+                    r_no.place(x=x1co, y=y1co)
+                    y = i[1] + "   " + i[2] + "   " + i[3]
+                    r_bk_no = Label(base, text=y, font=("Arial", 15), bg="silver", fg="black")
+                    r_bk_no.place(x=x2co, y=y2co)
+                    y1co = y1co + 40
+                    y2co = y2co + 40
+                    count = 2
+                    if flag >= 8:
+                        break
+                    flag = flag + 1
+            f1.close()
+
+            c1 = Canvas(base, height=2, width=600)
+            c1.place(x=1000, y=550)
+            r1 = Label(base, text="Room No.", font=("Arial 15 bold"), bg="silver", fg="black")
+            r1.place(x=1040, y=570)
+            r2 = Entry(base, width=15, font=("Arial 15 bold"))
+            r2.place(x=1150, y=570)
+            r3 = Label(base, text="Bed No.", font=("Arial 15 bold"), bg="silver", fg="black")
+            r3.place(x=1040, y=610)
+            r4 = Entry(base, width=15, font=("Arial 15 bold"))
+            r4.place(x=1150, y=610)
+            r5 = Label(base, text="(B1 B2 B3)", font=("Arial 10 bold"), bg="silver", fg="black")
+            r5.place(x=1040, y=640)
+            r6 = Label(base, text="( Girl = G1 )", font=("Arial 15 bold"), bg="silver", fg="black")
+            r6.place(x=1350,y=570)
+            r7 = Label(base, text="( Other = O1)",font=("Arial 15 bold"), bg="silver", fg="black")
+            r7.place(x=1350,y=610)
+            def student():
+                global G
+                bed1 = None
+                bed2 = None
+                bed3 = None
+                file_name = None
+                if G == 1:
+                    file_name = "room_info_boys.txt"
+                    bed1 = "B1"
+                    bed2 = "B2"
+                    bed3 = "B3"
+                elif G == 2:
+                    file_name = "room_info_girls.txt"
+                    bed1 = "G1"
+                    bed2 = "G2"
+                    bed3 = "G3"
+                elif G == 0:
+                    file_name = "room_info_others.txt"
+                    bed1 = "O1"
+                    bed2 = "O2"
+                    bed3 = "O3"
+                else:
+                    file_name = "room_info_boys.txt"
+                    bed1 = "B1"
+                    bed2 = "B2"
+                    bed3 = "B3"
+                f1 = open("student_info.txt", "a")
+                f2 = open(file_name,"a")
+                n = str(fir_name_entry.get()) + " "
+                b = str(r4.get()).upper()
+                ln = str(last_name_entry.get()).lower()
+                f = str(fathr_name_entry.get()).lower()
+                m = str(mther_name_entry.get()).lower()
+                d = str(dob_entry.get()).lower()
+                add = str(addrs_entry.get()).lower()
+                c = str(cont_entry.get()).lower()
+                e = str(email_entry.get())
+                w = str(place_entry.get()).lower()
+                v = str(vehicle_entry.get()).lower()
+                da = date().lower()
+                rom = str(r2.get()).lower()
+                f1.write(
+                    c + "," + n + ln + "," + f + "," + m + "," + d + "," + e + "," + w + "," + v + "," + da + "," + b + "," + rom + "," + "\n")
+                f1.close()         
