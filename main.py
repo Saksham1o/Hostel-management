@@ -747,3 +747,123 @@ def main():
                     y1co = y1co + 100
                     if flag > 2:
                         break
+
+            search_btn = Button(base, text="Search", font=("Arial 20 bold"), command=search)
+            search_btn.place(x=1200, y=140)
+
+        stud_info = Button(base, text="Information Of All Students", wraplength=180, justify=CENTER,
+                            font=("Arial 20 bold"), padx=50, pady=1, command=all_girl_info)
+        stud_info.place(x=400, y=200)
+
+        stud_room_wise = Button(base, text="Room Info", font=("Arial 20 bold"), padx=60, pady=5, command=room_wise)
+        stud_room_wise.place(x=400, y=400)
+
+        line = Canvas(base, height=680, width=5)
+        line.place(x=710, y=105)
+
+    def leave_application():
+        canvas = Canvas(base, bg='silver', height=675, width=1210)
+        canvas.place(x=320, y=105)
+        h1 = Label(base, text="Leave Application", bg="dark slate grey", font=("Arial 20 bold"), fg="white",
+                   padx=485, pady=10)
+        h1.place(x=320, y=105)
+
+        h_id = Label(base, text="Hostel ID", bg="silver", font=("Arial 20 bold"), fg="black")
+        h_id.place(x=400, y=200)
+        id_entry = Entry(base, width=15, font=("Arial 20"))
+        id_entry.place(x=550, y=200)
+
+        n_label = Label(base, text="Name", bg="silver", font=("Arial 20 bold"), fg="black")
+        n_label.place(x=800, y=200)
+        n_entry = Entry(base, width=20, font=("Arial 20"))
+        n_entry.place(x=900, y=200)
+
+        r_label = Label(base, text="Room No.", bg="silver", font=("Arial 20 bold"), fg="black")
+        r_label.place(x=400, y=300)
+        r_entry = Entry(base, width=15, font=("Arial 20"))
+        r_entry.place(x=550, y=300)
+
+        m_no = Label(base, text="Mobile No.", bg="silver", font=("Arial 20 bold"), fg="black")
+        m_no.place(x=800, y=300)
+        m_entry = Entry(base, width=15, font=("Arial 20"))
+        m_entry.place(x=950, y=300)
+
+        reason = Label(base, text="Reason For Leave", bg="silver", font=("Arial 20 bold"), fg="black")
+        reason.place(x=400, y=400)
+
+        reason_entry = Entry(base, width=20, font=("Arial 20"))
+        reason_entry.place(x=700, y=400)
+
+        return_date = Label(base, text="Return Date", bg="silver", font=("Arial 20 bold"), fg="black")
+        return_date.place(x=400, y=500)
+        x = Label(base, text="(YEAR-DD-MM)", font=("Arial 15 bold"), bg="silver", fg="black")
+        x.place(x=1000, y=500)
+        date_entry = Entry(base, width=18, font=("Arial 20"))
+        date_entry.place(x=700, y=500)
+
+        def leave_info():
+            i = str(id_entry.get())
+            n = str(n_entry.get())
+            r = str(r_entry.get())
+            m = str(m_entry.get())
+            reas = str(reason_entry.get())
+            rdate = str(date_entry.get())
+            current_date = date()
+            fopen = open("leave_applications.txt", "a")
+            fopen.write(i + "," + n + "," + r + "," + m + "," + reas + "," + current_date + "," + rdate + "," + "\n")
+            fopen.close()
+            success = Label(base, text="Submit Successfully..!", font=("Arial 20 bold"), fg="green", bg="white")
+            success.place(x=700, y=700)
+
+        submit = Button(base, text="Submit", font=("Arial 20 bold"), fg="black", command=leave_info)
+        submit.place(x=700, y=600)
+
+    add_std_btn = Button(base, text="Add Student", font=("Arial 20 bold"), padx=15, bg="white", command=add_stud)
+    add_std_btn.place(x=50, y=150)
+
+    add_new_room = Button(base, text="Add New Room", font=("Arial 20 bold"), bg="white", command=add_room)
+    add_new_room.place(x=50, y=250)
+
+    in_ot_time = Button(base, text="In And Outtime", font=("Arial 20 bold"), bg="white", command=in_out_time)
+    in_ot_time.place(x=50, y=350)
+
+    visitor = Button(base, text="Visitor", font=("Arial 20 bold"), bg="white", padx=55, command=visitor)
+    visitor.place(x=50, y=450)
+
+    view_info = Button(base, text="View Information", font=("Arial 18 bold"), bg="white", command=view_info)
+    view_info.place(x=50, y=535)
+
+    leave_application = Button(base, text="Leave Application", font=("Arial 18 bold"), bg="white", command=leave_application)
+    leave_application.place(x=50, y=620)
+
+    exit = Button(base, text="EXIT", font=("Arial 18 bold"), bg="white", padx=70, command=quit)
+    exit.place(x=50, y=700)
+
+username = Label(base, text="Username", font=("Arial 25 bold"), bg="silver", fg="black")
+username.place(x=470, y=240)
+user_entry = Entry(base, width=17, font=("Arial 20"))
+user_entry.place(x=650, y=245)
+user_entry.focus()
+
+password = Label(base, text="Password", font=("Arial 25 bold"), bg="silver", fg="black")
+password.place(x=470, y=350)
+pass_entry = Entry(base, width=17, font="Arial 20")
+pass_entry.place(x=650, y=355)
+
+def login():
+    id = str(user_entry.get())
+    key = str(pass_entry.get())
+    if id == "codewithcurious.com" and key == "cwc":
+        main()
+    else:
+        user_entry.focus()
+        user_entry.delete(0, END)
+        pass_entry.delete(0, END)
+        fail = Label(base, text="Wrong Username Or Password...!", font=("Arial 30 bold"), bg="silver", fg="red")
+        fail.place(x=450, y=540)
+
+
+login_btn = Button(base, text="Login", font=("Arial 25 bold"), bg="lightseagreen", fg="white", command=login)
+login_btn.place(x=650, y=440)
+
+base.mainloop()
