@@ -536,3 +536,108 @@ def main():
                     count = 2
                 else:
                     fobj.write(oneline)
+            if count == 2:
+                done = Label(base, text="Successful...!", font=("Arial 20 bold"), bg="silver", fg="black")
+                done.place(x=700, y=720)
+            if count == 1:
+                done = Label(base, text="Please Give Correct Information", font=("Arial 20 bold"), bg="silver",
+                             fg="black")
+                done.place(x=600, y=720)
+            fobj.close()
+
+        sear_ot = Button(base, text="Search Outtime", font=("Arial 18 bold"), bg="white", command=search_outtime)
+        sear_ot.place(x=1050, y=520)
+        save2 = Button(base, text="Save", font=("Arial 20 bold"), bg="white", fg="black", command=save2)
+        save2.place(x=1050, y=700)
+
+        r_sel = StringVar(base)
+        ls = ['Before Time', 'On Time', 'Late']
+        r_sel.set(ls[0])
+        remark = OptionMenu(base, r_sel, *ls)
+        remark.config(width=20, font=("Arial 15 bold"), fg="black")
+        remark.place(x=680, y=610)
+
+    def visitor():
+        canvas = Canvas(base, bg='silver', height=675, width=1210)
+        canvas.place(x=320, y=105)
+
+        h1 = Label(base, text="Visitor's   Information", bg="dark slate grey", font=("Arial 20 bold"), fg="white",
+                   padx=480, pady=10)
+        h1.place(x=320, y=105)
+        v_name = Label(base, text="Name", font=("Arial 20 bold"), bg="silver", fg="black")
+        v_name.place(x=500, y=200)
+        v_name_entry = Entry(base, width=20, font=("Arial 20 bold"))
+        v_name_entry.place(x=650, y=200)
+
+        v_contact = Label(base, text="Contact", font=("Arial 20 bold"), bg="silver", fg="black")
+        v_contact.place(x=500, y=300)
+        v_contact_entry = Entry(base, width=20, font=("Arial 20 bold"))
+        v_contact_entry.place(x=650, y=300)
+
+        v_reason = Label(base, text="Reason", font=("Arial 20 bold"), bg="silver", fg="black")
+        v_reason.place(x=500, y=400)
+        v_reason_entry = Entry(base, width=20, font=("Arial 20 bold"))
+        v_reason_entry.place(x=650, y=400)
+
+        v_address = Label(base, text="Address", font=("Arial 20 bold"), bg="silver", fg="black")
+        v_address.place(x=500, y=500)
+        v_address_entry = Entry(base, width=20, font=("Arial 20 bold"))
+        v_address_entry.place(x=650, y=500)
+
+        st_name = Label(base, text="Student Name", font=("Arial 20 bold"), bg="silver", fg="black")
+        st_name.place(x=1020, y=200)
+        st_name_entry = Entry(base, width=15, font=("Arial 20 "))
+        st_name_entry.place(x=1250, y=200)
+
+        def search():
+            def reset():
+                ot.destroy()
+                st_name_entry.delete(0, END)
+                st_name_entry.place(x=1250, y=200)
+
+            def add_visitor():
+                vn = str(v_name_entry.get())
+                vcon = str(v_contact_entry.get())
+                vr = str(v_reason_entry.get())
+                vadd = str(v_address_entry.get())
+                sn = str(st_name_entry.get())
+                d = str(date())
+                fp = open("visitor_info.txt", "a")
+                fp.write(sn + "," + vn + "," + vcon + "," + vr + "," + vadd + "," + d + "," + "\n")
+                fp.close()
+                s = Label(base, text="Successfull...!", font=("Arial 20 bold"), bg="dark slate grey", fg="white",
+                          padx=100)
+                s.place(x=1100, y=700)
+
+            reset_btn = Button(base, text="Reset", font=("Arial 20 bold"), command=reset)
+            reset_btn.place(x=1340, y=280)
+            s_n = str(st_name_entry.get())
+            fobj = open("student_info.txt", "r")
+            fdata_ls = fobj.readlines()
+            count = 1
+            for oneline in fdata_ls:
+                if oneline.__contains__("," + s_n + ","):
+                    # write date
+                    count = 2
+                    y = oneline.split(",")
+                    tv = StringVar()
+                    tv.set(y[11])
+                    ot_name = Label(base, text="Room No.", font=("Arial 20 bold"), bg="silver")
+                    ot_name.place(x=1020, y=400)
+                    ot = Entry(base, width=15, textvariable=tv, font=("Arial 20 bold"), justify=CENTER)
+                    ot.place(x=1250, y=400)
+                    add_btn = Button(base, text="Add Visitor", font=("Arial 20 bold"), command=add_visitor)
+                    add_btn.place(x=1100, y=500)
+                    break
+            fobj.close()
+            if count == 1:
+                tv = StringVar()
+                tv.set("Invalid Name")
+                ot = Entry(base, width=15, textvariable=tv, font=("Arial 20 bold"), fg="red")
+                ot.place(x=1250, y=200)
+
+        line = Canvas(base, height=650, width=5)
+        line.place(x=1000, y=162)
+
+        ser_btn = Button(base, text="Search", font=("Arial 20 bold"), command=search)
+        ser_btn.place(x=1180, y=280)
